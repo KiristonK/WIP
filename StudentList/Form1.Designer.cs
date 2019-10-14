@@ -45,12 +45,9 @@
             // 
             this.students.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.students.FormattingEnabled = true;
-            this.students.HorizontalExtent = 500;
-            this.students.HorizontalScrollbar = true;
             this.students.ItemHeight = 20;
             this.students.Location = new System.Drawing.Point(439, 42);
             this.students.Name = "students";
-            this.students.ScrollAlwaysVisible = true;
             this.students.Size = new System.Drawing.Size(453, 144);
             this.students.TabIndex = 0;
             this.students.MouseClick += new System.Windows.Forms.MouseEventHandler(this.students_MouseClick);
