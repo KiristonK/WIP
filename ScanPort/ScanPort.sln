@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScanPort", "ScanPort.csproj", "{135F06B0-A5FD-412C-9010-12B2E5D417EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpListener", "..\TcpListener\TcpListener.csproj", "{703550BD-347E-491A-85EC-1F1EAC44C011}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{135F06B0-A5FD-412C-9010-12B2E5D417EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{135F06B0-A5FD-412C-9010-12B2E5D417EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{135F06B0-A5FD-412C-9010-12B2E5D417EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{135F06B0-A5FD-412C-9010-12B2E5D417EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{703550BD-347E-491A-85EC-1F1EAC44C011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{703550BD-347E-491A-85EC-1F1EAC44C011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{703550BD-347E-491A-85EC-1F1EAC44C011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{703550BD-347E-491A-85EC-1F1EAC44C011}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F080457-1A23-46B4-8D83-B1FEC7151713}
+	EndGlobalSection
+EndGlobal
