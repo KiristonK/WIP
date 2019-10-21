@@ -34,6 +34,11 @@ namespace StudentList
         {
             students.SelectedIndex = students.IndexFromPoint(e.Location);
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 
     public class Student
@@ -46,14 +51,14 @@ namespace StudentList
         {
             if (name.Text == "" || IsDigit(name.Text) || surname.Text == "" || IsDigit(surname.Text) || phone.Text == "" || !IsDigitOnly(phone.Text))
             {
-                MessageBox.Show($@"Fields na4234me and surname can not be empty or contain digits
+                MessageBox.Show($@"Fields name and surname can not be empty or contain digits
 Phone number must be with digits only !", @"Error 0");
                 return;
             }
             FirstName = name.Text;
             LastName = surname.Text;
             PhoneNumber = phone.Text;
-            listBox.Items.Add($"{listBox.Items.Count + 1}: Student : {FirstName} {LastName}, +48{PhoneNumber}");
+            listBox.Items.Add(item: $"{listBox.Items.Count + 1}: Student : {FirstName} {LastName}, +48{PhoneNumber}");
         }
 
         private bool IsDigit(string tmp)

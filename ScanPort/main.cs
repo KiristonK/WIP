@@ -49,7 +49,7 @@ namespace ScanPort
                     WriteLine("Enter IP address to search for opened sockets : ");
                     var tmp = ReadLine();
                     hostD = IPAddress.Parse(tmp ?? throw new InvalidOperationException());
-                    var process = Process.Start(@"D:\My_Projects\TcpListener\bin\Debug\TcpListener.exe", hostD.ToString());
+                    var process = Process.Start(@"D:\My_Projects\WIP\TcpListener\bin\Debug\TcpListener.exe", hostD.ToString());
                     ps.Start(crtThread, portStart);
                     break;
                 case "n":
