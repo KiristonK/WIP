@@ -14,23 +14,21 @@ namespace ScanPort
         private static void Main()
         {
             IPAddress[] host = new IPAddress[] { };
-            PortScanner ps;
+            PortScanner ps = null;
             int portStart = 1, portStop = 65555, crtThread = 200;
             try
             {
                 Write("Enter IP address or domain name to dig : ");
                 var tmp = ReadLine();
-                if (tmp != null && !int.TryParse(tmp[0].ToString(), out int i))
+                if (tmp != null && !int.TryParse(tmp[0].ToString(), out _))
                 {
                     host = Dns.GetHostAddresses(tmp);
                     PrintAddresses(host);
-                    //WriteLine("Address used : " + host[host.Length - 1]);
                     ps = new PortScanner(host[host.Length - 1], portStart, portStop);
                 }
-                else
+                else if (tmp != null && int.TryParse(tmp[0].ToString(), out _))
                 {
-                    host[host.Length - 1] = IPAddress.Parse(tmp ?? throw new InvalidOperationException());
-                    ps = new PortScanner(host[host.Length - 1], portStart, portStop);
+                    ps = new PortScanner(IPAddress.Parse(tmp), portStart, portStop);
                 }
             }
             catch (Exception e)

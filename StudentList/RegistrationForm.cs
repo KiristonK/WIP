@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace StudentList
 {
@@ -10,13 +11,12 @@ namespace StudentList
         /// <summary>
         /// Let's imagine thar here we have MySQL or any other data base connection :)
         /// </summary>
-        private string username = "Username1";
-        private string password = "password!@#456";
         public RegistrationForm()
         {
             InitializeComponent();
-            textBox3.Hide();
+            passwordConfirm.Hide();
             label2.SendToBack();
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -26,7 +26,10 @@ namespace StudentList
 
         private void button2_Click(object sender, EventArgs e)
         {
-           if (textBox1.Text == username && textBox2.Text == password)
+            DataBase db = new DataBase();
+            db.OpenConnection();
+            string usernameText = username.Text, passwordText = password.Text;  
+           if (db.CheckInDataBase(usernameText,password: passwordText))
            {
                Hide();
                Form1 form1 = new Form1();
@@ -43,28 +46,28 @@ namespace StudentList
         private void button1_Click(object sender, EventArgs e)
         {
             label2.Text = "";
-            textBox3.Show();
-            textBox3.ForeColor = Color.Red;
-            if (textBox3.Text != @"Confirm password")
+            passwordConfirm.Show();
+            passwordConfirm.ForeColor = Color.Red;
+            if (passwordConfirm.Text != @"Confirm password")
                 if (RegisterCheck())
                 {
-                    textBox3.Hide();
+                    passwordConfirm.Hide();
                     label2.Top -= 10;
-                    label2.Text = $"Success ! Account created !\n now you can Log In !";
-                    textBox1.Text = "";
-                    textBox2.Text = "";
+                    label2.Text = @"Success ! Account created !
+Now you can Log In !";
+                    username.Text = "";
+                    password.Text = "";
                 }
         }
         private bool RegisterCheck()
         {
-            if (textBox2.Text == textBox3.Text)
+            if (password.Text == passwordConfirm.Text)
             {
-                username = textBox1.Text;
-                password = textBox2.Text;
+                
                 return true;
             }
-            textBox2.Text = @"Passwords are not similar !";
-            textBox2.ForeColor = Color.Red;
+            password.Text = @"Passwords are not similar !";
+            password.ForeColor = Color.Red;
             return false;
         }
         private Point lastPoint;
@@ -84,12 +87,12 @@ namespace StudentList
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            textBox2.ForeColor = Color.Black;
+            password.ForeColor = Color.Black;
         }
 
         private void textBox3_Enter(object sender, EventArgs e)
         {
-            textBox3.Text = "";
+            passwordConfirm.Text = "";
         }
 
         private void label3_MouseHover(object sender, EventArgs e)

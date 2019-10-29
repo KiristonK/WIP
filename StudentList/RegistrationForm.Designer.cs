@@ -35,9 +35,9 @@ namespace StudentList
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.username = new System.Windows.Forms.TextBox();
+            this.password = new System.Windows.Forms.TextBox();
+            this.passwordConfirm = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -82,36 +82,36 @@ namespace StudentList
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RegistrationForm_MouseDown);
             this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.RegistrationForm_MouseMove);
             // 
-            // textBox1
+            // username
             // 
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.textBox1.Location = new System.Drawing.Point(69, 83);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(301, 52);
-            this.textBox1.TabIndex = 3;
+            this.username.Font = new System.Drawing.Font("Segoe UI", 20F);
+            this.username.Location = new System.Drawing.Point(69, 83);
+            this.username.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.username.Name = "username";
+            this.username.Size = new System.Drawing.Size(301, 52);
+            this.username.TabIndex = 3;
             // 
-            // textBox2
+            // password
             // 
-            this.textBox2.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.textBox2.Location = new System.Drawing.Point(69, 139);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.PasswordChar = '*';
-            this.textBox2.Size = new System.Drawing.Size(301, 52);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.password.Font = new System.Drawing.Font("Segoe UI", 20F);
+            this.password.Location = new System.Drawing.Point(69, 139);
+            this.password.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.password.Name = "password";
+            this.password.PasswordChar = '*';
+            this.password.Size = new System.Drawing.Size(301, 52);
+            this.password.TabIndex = 4;
+            this.password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // textBox3
+            // passwordConfirm
             // 
-            this.textBox3.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.textBox3.Location = new System.Drawing.Point(69, 195);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(301, 52);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.Text = "Confirm password";
-            this.textBox3.Enter += new System.EventHandler(this.textBox3_Enter);
+            this.passwordConfirm.Font = new System.Drawing.Font("Segoe UI", 20F);
+            this.passwordConfirm.Location = new System.Drawing.Point(69, 195);
+            this.passwordConfirm.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.passwordConfirm.Name = "passwordConfirm";
+            this.passwordConfirm.Size = new System.Drawing.Size(301, 52);
+            this.passwordConfirm.TabIndex = 5;
+            this.passwordConfirm.Text = "Confirm password";
+            this.passwordConfirm.Enter += new System.EventHandler(this.textBox3_Enter);
             // 
             // pictureBox1
             // 
@@ -174,9 +174,9 @@ namespace StudentList
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.passwordConfirm);
+            this.Controls.Add(this.password);
+            this.Controls.Add(this.username);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -199,9 +199,9 @@ namespace StudentList
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox passwordConfirm;
+        private System.Windows.Forms.TextBox password;
+        private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label2;

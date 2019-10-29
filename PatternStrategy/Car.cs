@@ -12,11 +12,11 @@ namespace PatternStrategy
         }
     }
 
-    internal class ElectroMove : IMovable
+    internal class ElectricMove : IMovable
     {
         public void Move()
         {
-            Console.WriteLine("Electro moving.");
+            Console.WriteLine("Electric moving.");
         }
     }
 
@@ -42,6 +42,12 @@ namespace PatternStrategy
 
         public void Move()
         {
+            Movable.Move();
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine(_passengers + " " + _model);
             Movable.Move();
         }
 
