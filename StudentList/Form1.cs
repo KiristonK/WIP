@@ -6,6 +6,7 @@ namespace StudentList
 {
     public partial class Form1 : Form
     {
+        private Point _lastPoint;
         public Form1()
         {
             InitializeComponent();
@@ -51,7 +52,6 @@ namespace StudentList
             CloseBtn.BackColor = Color.LightGray;
         }
 
-        private Point _lastPoint;
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -71,6 +71,4 @@ namespace StudentList
            LoggedUser.Text = $@"Username : {usernameText}";
         }
     }
-
-    
 }

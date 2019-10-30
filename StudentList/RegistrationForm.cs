@@ -7,6 +7,7 @@ namespace StudentList
     public partial class RegistrationForm : Form
     {
         private DataBase _db;
+        private Point _lastPoint;
         public RegistrationForm()
         {
             InitializeComponent();
@@ -54,6 +55,7 @@ Now you can Log In !";
                     password.Text = "";
                 }
         }
+
         private bool RegisterCheck()
         {
             if (password.Text == passwordConfirm.Text)
@@ -69,7 +71,7 @@ Now you can Log In !";
             password.ForeColor = Color.Red;
             return false;
         }
-        private Point _lastPoint;
+
         private void RegistrationForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
