@@ -20,7 +20,6 @@ namespace StudentList
             Application.Exit();
         }
 
-        private static int userID;
         private void logIn_Click(object sender, EventArgs e)
         {
             string usernameText = username.Text, passwordText = password.Text;  
