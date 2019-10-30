@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace StudentList
@@ -38,6 +34,41 @@ namespace StudentList
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void CloseBtn_MouseEnter(object sender, EventArgs e)
+        {
+            CloseBtn.BackColor  = Color.Red;
+        }
+
+        private void CloseBtn_MouseLeave(object sender, EventArgs e)
+        {
+            CloseBtn.BackColor = Color.LightGray;
+        }
+
+        private Point _lastPoint;
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Left += e.X - _lastPoint.X;
+                Top += e.Y - _lastPoint.Y;
+            }
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            _lastPoint = new Point(e.X, e.Y);
+        }
+
+        public void AddUsername(string usernameText)
+        {
+           LoggedUser.Text = $@"Username : {usernameText}";
         }
     }
 

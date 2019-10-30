@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Data.Sql;
-using System.Data.SqlClient;
 
 namespace StudentList
 {
     public partial class RegistrationForm : Form
     {
-        /// <summary>
-        /// Let's imagine thar here we have MySQL or any other data base connection :)
-        /// </summary>
+        private DataBase _db;
         public RegistrationForm()
         {
             InitializeComponent();
             passwordConfirm.Hide();
-            label2.SendToBack();
+            errorLabel.SendToBack();
 
         }
 
@@ -24,36 +20,36 @@ namespace StudentList
             Application.Exit();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private static int userID;
+        private void logIn_Click(object sender, EventArgs e)
         {
-            DataBase db = new DataBase();
-            db.OpenConnection();
             string usernameText = username.Text, passwordText = password.Text;  
-           if (db.CheckInDataBase(usernameText,password: passwordText))
+           if (_db.CheckInDataBase(usernameText,password: passwordText))
            {
                Hide();
                Form1 form1 = new Form1();
                form1.Show();
+               form1.AddUsername(usernameText);
            }
            else
            {
-               label2.ForeColor = Color.Red;
-               label2.Top = 211;
-               label2.Text = @"Error ! Check username or password !";
+               errorLabel.ForeColor = Color.Red;
+               errorLabel.Top = 211;
+               errorLabel.Text = @"Error ! Check username or password !";
            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void signIn_Click(object sender, EventArgs e)
         {
-            label2.Text = "";
+            errorLabel.Text = "";
             passwordConfirm.Show();
             passwordConfirm.ForeColor = Color.Red;
             if (passwordConfirm.Text != @"Confirm password")
                 if (RegisterCheck())
                 {
                     passwordConfirm.Hide();
-                    label2.Top -= 10;
-                    label2.Text = @"Success ! Account created !
+                    errorLabel.Top -= 10;
+                    errorLabel.Text = @"Success ! Account created !
 Now you can Log In !";
                     username.Text = "";
                     password.Text = "";
@@ -63,26 +59,30 @@ Now you can Log In !";
         {
             if (password.Text == passwordConfirm.Text)
             {
-                
-                return true;
+                _db.AddUser(username.Text, password.Text);
+                if (_db.CheckInDataBase(username.Text, password.Text))
+                    return true;
+                MessageBox.Show(@"Something went wrong during adding record to database", @"Error",
+                    MessageBoxButtons.OK);
+                return false;
             }
             password.Text = @"Passwords are not similar !";
             password.ForeColor = Color.Red;
             return false;
         }
-        private Point lastPoint;
+        private Point _lastPoint;
         private void RegistrationForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
+                Left += e.X - _lastPoint.X;
+                Top += e.Y - _lastPoint.Y;
             }
         }
 
         private void RegistrationForm_MouseDown(object sender, MouseEventArgs e)
         {
-            lastPoint = new Point(e.X, e.Y);
+            _lastPoint = new Point(e.X, e.Y);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -97,12 +97,34 @@ Now you can Log In !";
 
         private void label3_MouseHover(object sender, EventArgs e)
         {
-            label3.BackColor = Color.Red;
+            closeBtn.BackColor = Color.Red;
         }
 
         private void label3_MouseLeave(object sender, EventArgs e)
         {
-            label3.BackColor = Color.Turquoise;
+            closeBtn.BackColor = Color.Turquoise;
+        }
+
+        private void RegistrationForm_Load(object sender, EventArgs e)
+        {
+            _db = new DataBase();
+            _db.OpenConnection();
+        }
+
+        private void password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                logIn_Click(sender,e);
+            }
+        }
+
+        private void passwordConfirm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                signIn_Click(sender,e);
+            }
         }
     }
 }

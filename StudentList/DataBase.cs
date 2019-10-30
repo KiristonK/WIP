@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Npgsql;
+﻿using Npgsql;
 
 namespace StudentList
 {
@@ -24,6 +17,14 @@ namespace StudentList
         public void OpenConnection()
         {
             _connection.Open();
+        }
+
+        public void AddUser(string username, string password)
+        {
+            _cmd = new NpgsqlCommand(
+                $"INSERT INTO sbd24055.\"usersList\"(a\"user\", \"password\") VALUES ('{username}', '{password}')", _connection);
+            _dataReader = _cmd.ExecuteReader();
+            _dataReader.Close();
         }
 
         public bool CheckInDataBase(string user, string password)
