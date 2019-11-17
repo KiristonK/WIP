@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CorossSwitch
+namespace WPF_APP
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,11 +23,6 @@ namespace CorossSwitch
         public MainWindow()
         {
             InitializeComponent();
-        }
-        
-        private void testButton_click(object sender, EventArgs e)
-        {
-            
         }
     }
 }
