@@ -35,7 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -51,7 +51,7 @@
             this.students.Location = new System.Drawing.Point(439, 75);
             this.students.Name = "students";
             this.students.Size = new System.Drawing.Size(453, 144);
-            this.students.TabIndex = 0;
+            this.students.TabIndex = 4;
             this.students.MouseClick += new System.Windows.Forms.MouseEventHandler(this.students_MouseClick);
             // 
             // name
@@ -60,7 +60,8 @@
             this.name.MaxLength = 20;
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(298, 22);
-            this.name.TabIndex = 1;
+            this.name.TabIndex = 0;
+            this.name.KeyDown += new System.Windows.Forms.KeyEventHandler(this.name_KeyDown);
             // 
             // surname
             // 
@@ -68,7 +69,8 @@
             this.surname.MaxLength = 20;
             this.surname.Name = "surname";
             this.surname.Size = new System.Drawing.Size(298, 22);
-            this.surname.TabIndex = 2;
+            this.surname.TabIndex = 1;
+            this.surname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.surname_KeyDown);
             // 
             // phone
             // 
@@ -76,7 +78,8 @@
             this.phone.MaxLength = 9;
             this.phone.Name = "phone";
             this.phone.Size = new System.Drawing.Size(298, 22);
-            this.phone.TabIndex = 3;
+            this.phone.TabIndex = 2;
+            this.phone.KeyDown += new System.Windows.Forms.KeyEventHandler(this.phone_KeyDown);
             // 
             // label1
             // 
@@ -105,16 +108,16 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Last name :";
             // 
-            // button1
+            // btnAdd
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(12, 159);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(421, 60);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Add student";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnAdd.Location = new System.Drawing.Point(12, 159);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(421, 60);
+            this.btnAdd.TabIndex = 3;
+            this.btnAdd.Text = "Add student";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label4
             // 
@@ -141,10 +144,10 @@
             this.button2.Location = new System.Drawing.Point(606, 40);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(286, 27);
-            this.button2.TabIndex = 13;
+            this.button2.TabIndex = 5;
             this.button2.Text = "Remove student";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // LoggedUser
             // 
@@ -163,7 +166,7 @@
             this.CloseBtn.Location = new System.Drawing.Point(870, 8);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(22, 22);
-            this.CloseBtn.TabIndex = 16;
+            this.CloseBtn.TabIndex = 6;
             this.CloseBtn.Text = "X";
             this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             this.CloseBtn.MouseEnter += new System.EventHandler(this.CloseBtn_MouseEnter);
@@ -181,7 +184,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -212,7 +215,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button2;

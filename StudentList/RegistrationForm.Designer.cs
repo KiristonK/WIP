@@ -52,10 +52,10 @@ namespace StudentList
             this.signIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.signIn.Name = "signIn";
             this.signIn.Size = new System.Drawing.Size(160, 41);
-            this.signIn.TabIndex = 0;
+            this.signIn.TabIndex = 4;
             this.signIn.Text = "Sign In";
             this.signIn.UseVisualStyleBackColor = true;
-            this.signIn.Click += new System.EventHandler(this.signIn_Click);
+            this.signIn.Click += new System.EventHandler(this.SignIn_Click);
             // 
             // logIn
             // 
@@ -63,10 +63,10 @@ namespace StudentList
             this.logIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.logIn.Name = "logIn";
             this.logIn.Size = new System.Drawing.Size(167, 41);
-            this.logIn.TabIndex = 1;
+            this.logIn.TabIndex = 3;
             this.logIn.Text = "Log In";
             this.logIn.UseVisualStyleBackColor = true;
-            this.logIn.Click += new System.EventHandler(this.logIn_Click);
+            this.logIn.Click += new System.EventHandler(this.LogIn_Click);
             // 
             // label1
             // 
@@ -89,7 +89,8 @@ namespace StudentList
             this.username.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(301, 52);
-            this.username.TabIndex = 3;
+            this.username.TabIndex = 0;
+            this.username.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.username_KeyPress);
             // 
             // password
             // 
@@ -99,9 +100,9 @@ namespace StudentList
             this.password.Name = "password";
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(301, 52);
-            this.password.TabIndex = 4;
-            this.password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            this.password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.password_KeyDown);
+            this.password.TabIndex = 1;
+            this.password.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            this.password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Password_KeyDown);
             // 
             // passwordConfirm
             // 
@@ -110,9 +111,9 @@ namespace StudentList
             this.passwordConfirm.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.passwordConfirm.Name = "passwordConfirm";
             this.passwordConfirm.Size = new System.Drawing.Size(301, 52);
-            this.passwordConfirm.TabIndex = 5;
+            this.passwordConfirm.TabIndex = 2;
             this.passwordConfirm.Text = "Confirm password";
-            this.passwordConfirm.Enter += new System.EventHandler(this.textBox3_Enter);
+            this.passwordConfirm.Enter += new System.EventHandler(this.TextBox3_Enter);
             this.passwordConfirm.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordConfirm_KeyDown);
             // 
             // pictureBox1
@@ -159,11 +160,11 @@ namespace StudentList
             this.closeBtn.Location = new System.Drawing.Point(356, 7);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(22, 22);
-            this.closeBtn.TabIndex = 10;
+            this.closeBtn.TabIndex = 5;
             this.closeBtn.Text = "X";
-            this.closeBtn.Click += new System.EventHandler(this.button3_Click);
-            this.closeBtn.MouseEnter += new System.EventHandler(this.label3_MouseHover);
-            this.closeBtn.MouseLeave += new System.EventHandler(this.label3_MouseLeave);
+            this.closeBtn.Click += new System.EventHandler(this.Button3_Click);
+            this.closeBtn.MouseEnter += new System.EventHandler(this.Label3_MouseHover);
+            this.closeBtn.MouseLeave += new System.EventHandler(this.Label3_MouseLeave);
             // 
             // RegistrationForm
             // 

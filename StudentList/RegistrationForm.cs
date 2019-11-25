@@ -16,12 +16,12 @@ namespace StudentList
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void logIn_Click(object sender, EventArgs e)
+        private void LogIn_Click(object sender, EventArgs e)
         {
             string usernameText = username.Text, passwordText = password.Text;  
            if (_db.CheckInDataBase(usernameText,password: passwordText))
@@ -39,7 +39,7 @@ namespace StudentList
            }
         }
 
-        private void signIn_Click(object sender, EventArgs e)
+        private void SignIn_Click(object sender, EventArgs e)
         {
             errorLabel.Text = "";
             passwordConfirm.Show();
@@ -74,11 +74,9 @@ Now you can Log In !";
 
         private void RegistrationForm_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - _lastPoint.X;
-                Top += e.Y - _lastPoint.Y;
-            }
+            if (e.Button != MouseButtons.Left) return;
+            Left += e.X - _lastPoint.X;
+            Top += e.Y - _lastPoint.Y;
         }
 
         private void RegistrationForm_MouseDown(object sender, MouseEventArgs e)
@@ -86,22 +84,22 @@ Now you can Log In !";
             _lastPoint = new Point(e.X, e.Y);
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void TextBox2_TextChanged(object sender, EventArgs e)
         {
             password.ForeColor = Color.Black;
         }
 
-        private void textBox3_Enter(object sender, EventArgs e)
+        private void TextBox3_Enter(object sender, EventArgs e)
         {
             passwordConfirm.Text = "";
         }
 
-        private void label3_MouseHover(object sender, EventArgs e)
+        private void Label3_MouseHover(object sender, EventArgs e)
         {
             closeBtn.BackColor = Color.Red;
         }
 
-        private void label3_MouseLeave(object sender, EventArgs e)
+        private void Label3_MouseLeave(object sender, EventArgs e)
         {
             closeBtn.BackColor = Color.Turquoise;
         }
@@ -112,19 +110,27 @@ Now you can Log In !";
             _db.OpenConnection();
         }
 
-        private void password_KeyDown(object sender, KeyEventArgs e)
+        private void Password_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                logIn_Click(sender,e);
-            }
+            if (e.KeyCode != Keys.Enter) return;
+            logIn.PerformClick();
+            e.Handled = e.SuppressKeyPress = true;
         }
 
         private void passwordConfirm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                signIn_Click(sender,e);
+                SignIn_Click(sender,e);
+                e.Handled = e.SuppressKeyPress = true;
+            }
+        }
+
+        private void username_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter)
+            {
+                password.Focus();
             }
         }
     }

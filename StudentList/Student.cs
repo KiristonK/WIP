@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace StudentList
 {
     public class Student
     {
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
-        private string PhoneNumber { get; set; }
+        public static readonly List<Student> Students = new List<Student>();
+        private int Id { get; set; }
+        public string FirstName { get; private set; }
+        public string LastName { get;private  set; }
+        public string PhoneNumber { get;private set; }
 
         public void AddStudent(ref ListBox listBox, ref TextBox name, ref TextBox surname, ref TextBox phone)
         {
@@ -20,7 +23,9 @@ Phone number must be with digits only !", @"Error 0");
             FirstName = name.Text;
             LastName = surname.Text;
             PhoneNumber = phone.Text;
-            listBox.Items.Add(item: $"{listBox.Items.Count + 1}: Student : {FirstName} {LastName}, +48{PhoneNumber}");
+            Id = listBox.Items.Count + 1;
+            listBox.Items.Add(this);
+            Students.Add(this);
         }
 
         private bool IsDigit(string tmp)
@@ -35,6 +40,11 @@ Phone number must be with digits only !", @"Error 0");
                 else
                     return false;
             return true;
+        }
+
+        public override string ToString()
+        {
+            return $"{Id}: Student : {FirstName} {LastName}, +48{PhoneNumber}";
         }
     }
 }
