@@ -1,120 +1,135 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading;
+using System.Windows.Forms;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ExamAppWinForm
 {
     public partial class Form1 : Form
     {
         private readonly CurrencyOperations _co = new CurrencyOperations();
-        private double Currency { get; set; }
 
         public Form1()
         {
             InitializeComponent();
-
-            foreach (var item in _co.GetData(null))
-            {
-                var res = Regex.Replace(item.ToString(), "\"", string.Empty);
-
-                if (item.ToString().Substring(1, 3) == "PLN")
-                {
-                    var index = this.FromComBox.Items.Add(res);
-                    this.FromComBox.SelectedIndex = index;
-                }
-                else
-                    this.FromComBox.Items.Add(res);
-            }
-
-            foreach (var item in _co.GetData(null))
-            {
-                var res = Regex.Replace(item.ToString(), "\"", string.Empty);
-                this.ToComBox.Items.Add(res);
-            }
-            this.ToComBox.SelectedIndex = 0;
-            SetLabels();
+            InitBoxes("PLN", "CAD");
         }
 
+        private double Currency { get; set; }
 
         private void InitBoxes(string baseCur, string toCurrency)
         {
-            this.FromComBox.Items.Clear();
-            this.ToComBox.Items.Clear();
+            FromComBox.Items.Clear();
+            ToComBox.Items.Clear();
             foreach (var item in _co.GetData(baseCur))
             {
                 var res = Regex.Replace(item.ToString(), "\"", string.Empty);
 
                 if (item.ToString().Substring(1, 3) == baseCur)
                 {
-                    var indexFrom = this.FromComBox.Items.Add(res); 
-                    this.FromComBox.SelectedIndex = indexFrom;
+                    var indexFrom = FromComBox.Items.Add(res);
+                    FromComBox.SelectedIndex = indexFrom;
                 }
                 else
-                    this.FromComBox.Items.Add(res);
+                {
+                    FromComBox.Items.Add(res);
+                }
 
                 if (item.ToString().Substring(1, 3) == toCurrency)
                 {
-                    var indexTo = this.ToComBox.Items.Add(res);
-                    this.ToComBox.SelectedIndex = indexTo;
+                    var indexTo = ToComBox.Items.Add(res);
+                    ToComBox.SelectedIndex = indexTo;
                 }
                 else
-                    this.ToComBox.Items.Add(res);
+                {
+                    ToComBox.Items.Add(res);
+                }
             }
+
+            Currency = double.Parse(Regex.Replace(ToComBox.SelectedItem.ToString(),
+                ".*?: ", string.Empty));
+            Result();
+            SetLabels();
         }
 
+        private void Result()
+        {
+            if (int.TryParse(FromAmount.Text, out var r))
+                ResultAmount.Text = _co.ConvertCurrency(Currency, r).ToString();
+        }
 
         private void SetLabels()
         {
-            this.StartCurrency.Text = FromComBox.SelectedItem.ToString().Substring(0, 3);
-            this.EndCurrency.Text = ToComBox.SelectedItem.ToString().Substring(0, 3);
-            this.ResultLabel.Text = ToComBox.SelectedItem.ToString().Substring(0, 3);
+            StartCurrency.Text = FromComBox.SelectedItem.ToString().Substring(0, 3);
+            EndCurrency.Text = ToComBox.SelectedItem.ToString().Substring(0, 3);
+            ResultLabel.Text = ToComBox.SelectedItem.ToString().Substring(0, 3);
         }
 
         private void Input_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(FromAmount.Text, out var r))
-                ResultAmount.Text = _co.ConvertCurrency(Currency,r).ToString();
+            Result();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SwitchCurrencies_Click(object sender, EventArgs e)
         {
             var tmp = FromComBox.SelectedItem;
             FromComBox.SelectedItem = ToComBox.SelectedItem;
             ToComBox.SelectedItem = tmp;
-            InitBoxes(this.FromComBox.SelectedItem.ToString().Substring(0, 3), 
-                this.ToComBox.SelectedItem.ToString().Substring(0, 3));
-            Currency = double.Parse(Regex.Replace(this.ToComBox.SelectedItem.ToString(),
-                ".*?: ", string.Empty));
-            SetLabels();
-
+            InitBoxes(FromComBox.SelectedItem.ToString().Substring(0, 3),
+                ToComBox.SelectedItem.ToString().Substring(0, 3));
         }
-
 
         private void FromComBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            //InitBoxes(this.FromComBox.SelectedItem.ToString().Substring(0, 3),
-            //    this.ToComBox.SelectedItem.ToString().Substring(0, 3));
-            Currency = double.Parse(Regex.Replace(this.ToComBox.SelectedItem.ToString(),
-                ".*?: ", string.Empty));
-            SetLabels();
+            InitBoxes(FromComBox.SelectedItem.ToString().Substring(0, 3),
+                ToComBox.SelectedItem.ToString().Substring(0, 3));
         }
 
         private void ToComBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            Currency = double.Parse(Regex.Replace(this.ToComBox.SelectedItem.ToString(),
+            Currency = double.Parse(Regex.Replace(ToComBox.SelectedItem.ToString(),
                 ".*?: ", string.Empty));
+            Result();
             SetLabels();
+        }
+
+        private void SaveAsJson(object sender, EventArgs e)
+        {
+            var serializer = new JsonSerializer();
+            using (var sw = new StreamWriter(@"ExchangeResult.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, new
+                {
+                    BaseCurrency = FromComBox.SelectedItem.ToString().Substring(0, 3),
+                    Amount = FromAmount.Text,
+                    Currency = ToComBox.SelectedItem.ToString(),
+                    ResultAmount = ResultAmount.Text +
+                                   ToComBox.SelectedItem.ToString().Substring(0, 3)
+                });
+            }
+        }
+
+        private void ExitApplication(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void SaveAsTxt(object sender, EventArgs e)
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Base currency: " + FromComBox.SelectedItem.ToString().Substring(0, 3));
+            stringBuilder.AppendLine("Aim currency: " + ToComBox.SelectedItem);
+            stringBuilder.AppendLine("Amount: " + FromAmount.Text);
+            stringBuilder.AppendLine("You will get " + ResultAmount.Text + " " +
+                                     ToComBox.SelectedItem.ToString().Substring(0, 3));
+
+            using (var sw = new StreamWriter(@"ExchangeResult.txt"))
+            {
+                sw.Write(stringBuilder);
+            }
         }
     }
 }

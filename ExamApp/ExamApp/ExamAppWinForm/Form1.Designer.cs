@@ -33,8 +33,6 @@ namespace ExamAppWinForm
             this.FromComBox = new System.Windows.Forms.ComboBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ToComBox = new System.Windows.Forms.ComboBox();
@@ -46,17 +44,13 @@ namespace ExamAppWinForm
             this.ResultAmount = new System.Windows.Forms.TextBox();
             this.ResultLabel = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAstxtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ToComBox
-            // 
-            this.ToComBox.FormattingEnabled = true;
-            this.ToComBox.Location = new System.Drawing.Point(454, 90);
-            this.ToComBox.Name = "ToComBox";
-            this.ToComBox.Size = new System.Drawing.Size(442, 24);
-            this.ToComBox.TabIndex = 3;
-            this.ToComBox.SelectedValueChanged += new System.EventHandler(this.ToComBox_SelectedValueChanged);
             // 
             // FromComBox
             // 
@@ -65,15 +59,13 @@ namespace ExamAppWinForm
             this.FromComBox.Name = "FromComBox";
             this.FromComBox.Size = new System.Drawing.Size(442, 24);
             this.FromComBox.TabIndex = 0;
-            this.FromComBox.SelectedValueChanged += new System.EventHandler(this.FromComBox_SelectedValueChanged);
+            this.FromComBox.SelectionChangeCommitted += new System.EventHandler(this.FromComBox_SelectedValueChanged);
             // 
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(908, 28);
@@ -82,21 +74,13 @@ namespace ExamAppWinForm
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.exitToolStripMenuItem1});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(54, 24);
-            this.saveToolStripMenuItem.Text = "Save";
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
-            this.exitToolStripMenuItem.Text = "Exit";
             // 
             // label1
             // 
@@ -117,6 +101,15 @@ namespace ExamAppWinForm
             this.label2.Size = new System.Drawing.Size(350, 35);
             this.label2.TabIndex = 4;
             this.label2.Text = "Wybierz walute docelową";
+            // 
+            // ToComBox
+            // 
+            this.ToComBox.FormattingEnabled = true;
+            this.ToComBox.Location = new System.Drawing.Point(454, 90);
+            this.ToComBox.Name = "ToComBox";
+            this.ToComBox.Size = new System.Drawing.Size(442, 24);
+            this.ToComBox.TabIndex = 3;
+            this.ToComBox.SelectionChangeCommitted += new System.EventHandler(this.ToComBox_SelectedValueChanged);
             // 
             // StartCurrency
             // 
@@ -195,13 +188,49 @@ namespace ExamAppWinForm
             this.button1.TabIndex = 13;
             this.button1.Text = "Wymień waluty";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.SwitchCurrencies_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveAsJSONToolStripMenuItem,
+            this.saveAstxtToolStripMenuItem});
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveAsJson);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            // 
+            // exitToolStripMenuItem1
+            // 
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitApplication);
+            // 
+            // saveAsJSONToolStripMenuItem
+            // 
+            this.saveAsJSONToolStripMenuItem.Name = "saveAsJSONToolStripMenuItem";
+            this.saveAsJSONToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsJSONToolStripMenuItem.Text = "Save as JSON";
+            this.saveAsJSONToolStripMenuItem.Click += new System.EventHandler(this.SaveAsJson);
+            // 
+            // saveAstxtToolStripMenuItem
+            // 
+            this.saveAstxtToolStripMenuItem.Name = "saveAstxtToolStripMenuItem";
+            this.saveAstxtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAstxtToolStripMenuItem.Text = "Save as .txt";
+            this.saveAstxtToolStripMenuItem.Click += new System.EventHandler(this.SaveAsTxt);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(908, 458);
+            this.ClientSize = new System.Drawing.Size(908, 239);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ResultLabel);
             this.Controls.Add(this.ResultAmount);
@@ -217,7 +246,7 @@ namespace ExamAppWinForm
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Currency exchanger";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -230,8 +259,6 @@ namespace ExamAppWinForm
         private System.Windows.Forms.ComboBox FromComBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox ToComBox;
@@ -243,6 +270,11 @@ namespace ExamAppWinForm
         private System.Windows.Forms.TextBox ResultAmount;
         private System.Windows.Forms.Label ResultLabel;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saveAsJSONToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAstxtToolStripMenuItem;
     }
 }
 
