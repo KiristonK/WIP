@@ -64,7 +64,8 @@ BOOL levels[10] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, inHouse = FALSE;
 HFONT hfont;
 LOGFONT font;
 
-wchar_t enemyName[] = L"res/rEn/0.bmp";
+LPSTR enemyName = LPSTR(L"res/rEn/0.bmp");
+
 
 VOID LoadResuorce()
 {
@@ -89,23 +90,23 @@ VOID LoadResuorce()
 		i = CreateCompatibleDC(tempDC);
 	}
 
-	bmpFon = static_cast<HBITMAP>(LoadImage(nullptr, L"res/fon.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	hBitmap = static_cast<HBITMAP>(LoadImage(nullptr, L"res/Grass.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	hSteve = static_cast<HBITMAP>(LoadImage(nullptr, L"res/Steve.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	hSteveR = static_cast<HBITMAP>(LoadImage(nullptr, L"res/SteveR.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpTree = static_cast<HBITMAP>(LoadImage(nullptr, L"res/TreeBig.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpStone = static_cast<HBITMAP>(LoadImage(nullptr, L"res/stoneGrassed.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpHouse = static_cast<HBITMAP>(LoadImage(nullptr, L"res/House.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpHouseWall = static_cast<HBITMAP>(LoadImage(nullptr, L"res/houseWall.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpHit = static_cast<HBITMAP>(LoadImage(nullptr, L"res/hit.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpFloor = static_cast<HBITMAP>(LoadImage(nullptr, L"res/floor.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpHpBar = static_cast<HBITMAP>(LoadImage(nullptr, L"res/hpBar.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	bmpFireBall = static_cast<HBITMAP>(LoadImage(nullptr, L"res/fireBallDark.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE)
+	bmpFon = static_cast<HBITMAP>(LoadImage(nullptr, "res/fon.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	hBitmap = static_cast<HBITMAP>(LoadImage(nullptr, "res/Grass.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	hSteve = static_cast<HBITMAP>(LoadImage(nullptr, "res/Steve.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	hSteveR = static_cast<HBITMAP>(LoadImage(nullptr, "res/SteveR.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpTree = static_cast<HBITMAP>(LoadImage(nullptr, "res/TreeBig.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpStone = static_cast<HBITMAP>(LoadImage(nullptr, "res/stoneGrassed.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpHouse = static_cast<HBITMAP>(LoadImage(nullptr, "res/House.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpHouseWall = static_cast<HBITMAP>(LoadImage(nullptr, "res/houseWall.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpHit = static_cast<HBITMAP>(LoadImage(nullptr, "res/hit.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpFloor = static_cast<HBITMAP>(LoadImage(nullptr, "res/floor.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpHpBar = static_cast<HBITMAP>(LoadImage(nullptr, "res/hpBar.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+	bmpFireBall = static_cast<HBITMAP>(LoadImage(nullptr, "res/fireBallDark.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE)
 	);
 
 	for (int i = 0; i < 5; i++)
 	{
-		wsprintf(enemyName, L"%s%d%s", L"res/rEn/", i, L".bmp");
+		wsprintf(enemyName, "%s%d%s", L"res/rEn/", i, L".bmp");
 		bmpEnemy[i] = static_cast<HBITMAP>(LoadImage(nullptr, enemyName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 	}
 
@@ -187,7 +188,7 @@ DWORD WINAPI threadDraw(LPVOID A)
 	GetObject(bmpHpBar, sizeof(BITMAP), &bmHpBar);
 	GetObject(bmpFireBall, sizeof(BITMAP), &bmFireBall);
 
-	wchar_t buff[256];
+	LPSTR buff = LPSTR(L"");
 
 	int treePos = 400, treePos1 = treePos - 200;
 	int t = timeGetTime(), t1 = t;
@@ -317,7 +318,7 @@ DWORD WINAPI threadDraw(LPVOID A)
 				if (enHP <= 0) enemyAlive = FALSE;
 				if (enR)
 				{
-					wsprintf(enemyName, L"%s%d%s", L"res/rEn/", enF, L".bmp");
+					wsprintf(enemyName, "%s%d%s", L"res/rEn/", enF, L".bmp");
 					bmpEnemy[enF] = static_cast<HBITMAP>(LoadImage(nullptr, enemyName, IMAGE_BITMAP, 0, 0,
 					                                               LR_LOADFROMFILE));
 					bmpTemp = static_cast<HBITMAP>(SelectObject(enemyDC[enF], bmpEnemy[enF]));
@@ -336,7 +337,7 @@ DWORD WINAPI threadDraw(LPVOID A)
 				}
 				if (!enR)
 				{
-					wsprintf(enemyName, L"%s%d%s", L"res/lEn/", enF, L".bmp");
+					wsprintf(enemyName, "%s%d%s", L"res/lEn/", enF, L".bmp");
 					bmpEnemy[enF] = static_cast<HBITMAP>(LoadImage(nullptr, enemyName, IMAGE_BITMAP, 0, 0,
 					                                               LR_LOADFROMFILE));
 					bmpTemp = static_cast<HBITMAP>(SelectObject(enemyDC[enF], bmpEnemy[enF]));
@@ -364,7 +365,7 @@ DWORD WINAPI threadDraw(LPVOID A)
 				               (rWindow.bottom - bm.bmHeight * 2) - (bmEnemy.bmHeight / 10) - yEn / 2, bmHpBar.bmWidth,
 				               bmHpBar.bmHeight,
 				               static_cast<HDC>(hpDC), 0, 0, bmHpBar.bmWidth, bmHpBar.bmHeight, RGB(255, 255, 255));
-				int c = wsprintf(buff, L"%d%s%d", enHP, L" / ", maxHpEn);
+				int c = wsprintf(buff, "%d%s%d", enHP, L" / ", maxHpEn);
 				SetBkMode(cwinDC, TRANSPARENT);
 				hfont = ::CreateFontIndirect(&font);
 				SelectObject(cwinDC, hfont);
@@ -376,7 +377,7 @@ DWORD WINAPI threadDraw(LPVOID A)
 			{
 				if (mRight)
 				{
-					bmpHit = static_cast<HBITMAP>(LoadImage(nullptr, L"res/hit.bmp", IMAGE_BITMAP, 0, 0,
+					bmpHit = static_cast<HBITMAP>(LoadImage(nullptr, "res/hit.bmp", IMAGE_BITMAP, 0, 0,
 					                                        LR_LOADFROMFILE));
 					bmpTemp = static_cast<HBITMAP>(SelectObject(hitDC, bmpHit));
 					if (bmpTemp) DeleteObject(bmpTemp);
@@ -390,7 +391,7 @@ DWORD WINAPI threadDraw(LPVOID A)
 				}
 				if (mLeft)
 				{
-					bmpHit = static_cast<HBITMAP>(LoadImage(nullptr, L"res/hitL.bmp", IMAGE_BITMAP, 0, 0,
+					bmpHit = static_cast<HBITMAP>(LoadImage(nullptr, "res/hitL.bmp", IMAGE_BITMAP, 0, 0,
 					                                        LR_LOADFROMFILE));
 					bmpTemp = static_cast<HBITMAP>(SelectObject(hitDC, bmpHit));
 					if (bmpTemp) DeleteObject(bmpTemp);
@@ -417,7 +418,7 @@ DWORD WINAPI threadDraw(LPVOID A)
 
 			TransparentBlt(cwinDC, rWindow.left + 10, rWindow.top + 10, bmHpBar.bmWidth * 4, bmHpBar.bmHeight * 2,
 			               static_cast<HDC>(hpDC), 0, 0, bmHpBar.bmWidth, bmHpBar.bmHeight, RGB(255, 255, 255));
-			int c = wsprintf(buff, L"%d%s%d", plHP, L" / ", maxHpPl);
+			int c = wsprintf(buff, "%d%s%d", plHP, L" / ", maxHpPl);
 			SetBkMode(cwinDC, TRANSPARENT);
 			hfont = CreateFont(0, 0, 0, 0, 800, 0, 0, 0, 0, 0, 0, 0, 0, nullptr);
 			SelectObject(cwinDC, hfont);
@@ -453,10 +454,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrewInstance, LPSTR lpszCmdPa
 {
 	WNDCLASS WndClass;
 	MSG Msg;
-	LPCWSTR szClassName = L"Game";
+	LPCSTR szClassName = "Game";
 
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
-	WndClass.lpfnWndProc = static_cast<WNDPROC>(GameWndProc);
+	WndClass.lpfnWndProc = const_cast<WNDPROC>(GameWndProc);
 	WndClass.hInstance = hInstance;
 	WndClass.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH));
 	WndClass.lpszClassName = szClassName;
@@ -469,11 +470,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrewInstance, LPSTR lpszCmdPa
 
 	if (!RegisterClass(&WndClass))
 	{
-		MessageBox(nullptr, static_cast<LPCWSTR>(L"Cannot register class"), static_cast<LPCWSTR>(L"Error"), MB_OK);
+		MessageBox(nullptr, "Cannot register class", "Error", MB_OK);
 		return 0;
 	}
 
-	hWnd = CreateWindowEx(WS_EX_TOPMOST, szClassName, static_cast<LPCWSTR>(L"Game"),
+	hWnd = CreateWindowEx(WS_EX_TOPMOST, szClassName, LPCSTR(L"Game"),
 	                      WS_MAXIMIZE | WS_OVERLAPPEDWINDOW & ~(WS_MAXIMIZEBOX) | WS_BORDER,
 	                      CW_USEDEFAULT,
 	                      CW_USEDEFAULT,
@@ -483,7 +484,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrewInstance, LPSTR lpszCmdPa
 
 	if (!hWnd)
 	{
-		MessageBox(nullptr, static_cast<LPCWSTR>(L"Cannot create window"), static_cast<LPCWSTR>(L"Error"), MB_OK);
+		MessageBox(nullptr, LPCSTR(L"Cannot create window"), LPCSTR(L"Error"), MB_OK);
 		return 0;
 	}
 
@@ -507,7 +508,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrewInstance, LPSTR lpszCmdPa
 	font.lfClipPrecision = 0; // Устанавливает точность отсечения
 	font.lfQuality = 0; // Устанавливает качество вывода
 	font.lfPitchAndFamily = 0; // Устанавливает ширину символов и семейство шрифта
-	wsprintf(font.lfFaceName, L"VERDANA"); //  устанавливает название шрифта
+	wsprintf(font.lfFaceName, "VERDANA"); //  устанавливает название шрифта
 
 	hfont = ::CreateFontIndirect(&font);
 
@@ -618,7 +619,7 @@ LRESULT CALLBACK GameWndProc(HWND funcHWND, UINT Message, UINT wParam, LONG lPar
 
 		if (LOWORD(wParam) == 'r' || LOWORD(wParam) == 'R')
 		{
-			const int msgResult = MessageBox(hWnd, L"Do you really wan't restart game ?", L"Caution, game restart !", MB_YESNO);
+			const int msgResult = MessageBox(hWnd, "Do you really wan't restart game ?", "Caution, game restart !", MB_YESNO);
 			if (msgResult == 6)
 			{
 				xPl = 0;
@@ -636,7 +637,7 @@ LRESULT CALLBACK GameWndProc(HWND funcHWND, UINT Message, UINT wParam, LONG lPar
 
 		if (GetKeyState(VK_ESCAPE) < 0)
 		{
-			MessageBox(hWnd, L"Menu body", L"Main menu", NULL);
+			MessageBox(hWnd, "Menu body", "Main menu", NULL);
 		}
 
 		return 0;
