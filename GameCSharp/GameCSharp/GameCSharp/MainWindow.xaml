@@ -1,0 +1,19 @@
+﻿<Window x:Class="GameCSharp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameCSharp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" WindowState="Maximized" KeyUp="MainKeyUp" MouseDown="MainWindow_OnMouseDown" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="fon.bmp" Stretch="UniformToFill" Viewbox="0,0,1,0.7"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="131*"/>
+            <RowDefinition Height="19*"/>
+        </Grid.RowDefinitions>
+        <Image HorizontalAlignment="Left" Margin="0,0.2,0,-0.4" VerticalAlignment="Top" Grid.Row="1" Source="pixil-frame-0.png" RenderTransformOrigin="0.5,0.5"/>
+    </Grid>
+</Window>

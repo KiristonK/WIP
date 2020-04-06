@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -21,26 +22,31 @@ namespace Exersises
             // WriteLine(new ReverseProgramming().CalculateExponent(long.Parse(ReadLine() ?? throw new InvalidOperationException()),
             //     long.Parse(ReadLine() ?? throw new InvalidOperationException())));
 
-            WriteLine(new ReverseProgramming().MissingNum(new int[] {7, 2, 3, 6, 5, 9, 1, 4, 8}));
-            foreach (var num in new ReverseProgramming().FindLargest(new double[][]
-                {new double[] {-34, -54, -74}, new double[] {-32, -2, -65}, new double[] {-54, 7, -43}}))
-            {
-                Write(num + "\t");
-            }
+            //WriteLine(new ReverseProgramming().MissingNum(new int[] {7, 2, 3, 6, 5, 9, 1, 4, 8}));
+            //foreach (var num in new ReverseProgramming().FindLargest(new double[][]
+            //    {new double[] {-34, -54, -74}, new double[] {-32, -2, -65}, new double[] {-54, 7, -43}}))
+            //{
+            //    Write(num + "\t");
+            //}
 
-            var res = new ReverseProgramming().PalindromeDescendant(11211230);
-            WriteLine(res);
-            var res1 = new ReverseProgramming().IndexOfCapitals("eDaBiT");
-            foreach (var num  in res1)
-            {
-                WriteLine(num);
-            }
-            WriteLine(new ReverseProgramming().IsStrangePair("",""));
+            //var res = new ReverseProgramming().PalindromeDescendant(11211230);
+            //WriteLine(res);
+            //var res1 = new ReverseProgramming().IndexOfCapitals("eDaBiT");
+            //foreach (var num  in res1)
+            //{
+            //    WriteLine(num);
+            //}
+            //WriteLine(new ReverseProgramming().IsStrangePair("",""));
 
-            var simp = new ReverseProgramming().Simplify("5/7");
-            WriteLine(simp);
-            new ReverseProgramming().ValidateEmail("@email");
-            new ReverseProgramming().AlmostPalindrome("gggggg");
+            //var simp = new ReverseProgramming().Simplify("5/7");
+            //WriteLine(simp);
+            //new ReverseProgramming().ValidateEmail("@email");
+            //new ReverseProgramming().AlmostPalindrome("gggggg");
+            //new ReverseProgramming().ConvertTime(ReadLine());
+            var sol = new Solution();
+            Console.WriteLine(sol.solution(18,2));
+            Console.WriteLine(sol.WeekdayRobWasBornInDutch(2001,12,2));
+            Console.ReadLine();
         }
 
         public static int[] MultiplyByLength(int[] arr)
@@ -60,8 +66,53 @@ namespace Exersises
         }
     }
 
+    class Solution
+    {
+        //public int solution(int[] A)
+        //{
+        //    // write your code in C# 6.0 with .NET 4.5 (Mono)
+        //    var min = 1;
+        //    while (true)
+        //    {
+        //        if (A.Any(num => min == num))
+        //        {
+        //            min++;
+        //        }else return min;
+        //    }
+        //}
+
+        public string WeekdayRobWasBornInDutch(int year, int month, int day) => 
+            CultureInfo.GetCultureInfo("nl-NL").DateTimeFormat.GetDayName(new DateTime(year, month, day).DayOfWeek);
+        public int solution(int N, int K)
+        {
+            var res = 0;
+            while (N != 1)
+            {
+                if (N % 2 == 0 && K != 0)
+                {
+                    N /= 2;
+                    K--;
+                    res++;
+                }
+                else
+                {
+                    N -= 1;
+                    res++;
+                }
+            }
+            return res;
+        }
+    }
     internal class ReverseProgramming
     {
+        public string ConvertTime(string time)
+        {
+            if (time.EndsWith("am"))
+                return time.Substring(0, 2) == "12" ? "0:00" : time.Substring(0, 5);
+            if (time.EndsWith("pm"))
+                return (int.Parse(time.Split(':')[0]) + 12) != 24 ? int.Parse(time.Split(':')[0]) + 12 + ":" + int.Parse(time.Split(':')[1].Substring(0, 2)) : "0:" + int.Parse(time.Split(':')[1].Substring(0, 2));
+            return int.Parse(time.Split(':')[0]) > 12 ? int.Parse(time.Split(':')[0]) - 12 + ":" + time.Split(':')[1] + " pm" : time + " am";
+        }
         public string MysteryFunc(string str)
         {
             var res = string.Empty;
