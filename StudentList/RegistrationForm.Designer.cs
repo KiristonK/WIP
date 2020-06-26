@@ -70,7 +70,7 @@ namespace StudentList
             // 
             // label1
             // 
-            this.label1.Font = new System.Drawing.Font("Tempus Sans ITC", 25F);
+            this.label1.Font = new System.Drawing.Font("Montserrat Light", 22F);
             this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
             this.label1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.label1.Location = new System.Drawing.Point(2, 7);

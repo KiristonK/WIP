@@ -27,10 +27,9 @@ namespace StudentList
                 students.Items.RemoveAt(students.SelectedIndex);
         }
 
-        private void students_MouseClick(object sender, MouseEventArgs e)
+        private void students_MouseClick(object sender, MouseEventArgs e) //Fill up fields with selected student data
         {
             students.SelectedIndex = students.IndexFromPoint(e.Location);
-            var dataList = students.Items[students.SelectedIndex].ToString().Replace(":","").Split();
             name.Text = Student.Students[students.SelectedIndex].FirstName;
             surname.Text = Student.Students[students.SelectedIndex].LastName;
             phone.Text = Student.Students[students.SelectedIndex].PhoneNumber;
@@ -77,29 +76,23 @@ namespace StudentList
 
         private void name_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                surname.Focus();
-                e.Handled = e.SuppressKeyPress = true;
-            }
+            if (e.KeyCode != Keys.Enter) return; //If pressed key is not enter focus on the next element
+            surname.Focus();
+            e.Handled = e.SuppressKeyPress = true;
         }
 
         private void surname_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                phone.Focus();
-                e.Handled = e.SuppressKeyPress = true;
-            }
+            if (e.KeyCode != Keys.Enter) return; //If pressed key is not enter focus on the next element
+            phone.Focus();
+            e.Handled = e.SuppressKeyPress = true;
         }
 
         private void phone_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                btnAdd.PerformClick();
-                e.Handled = e.SuppressKeyPress = true;
-            }
+            if (e.KeyCode != Keys.Enter) return; //If pressed key is not enter, trigger click on button
+            btnAdd.PerformClick();
+            e.Handled = e.SuppressKeyPress = true;
         }
     }
 }

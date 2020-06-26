@@ -26,8 +26,9 @@ WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
 
 wchar_t enemyName[] = L"res/rEn/0.bmp";
 
-HINSTANCE mainHinstace;
-HWND hWnd = nullptr, hwndMenu = nullptr;
+HINSTANCE mainHinstace; //Main instance
+HWND hWnd = nullptr, hwndMenu = nullptr; //Handlers
+//All needed descriptors
 HDC winDC,
     fonDC,
     cwinDC,
@@ -43,14 +44,13 @@ HDC winDC,
     hitDC,
     hpDC,
     fireBallDC;
-
+//Ractengles
 RECT rClient,
      rWindow,
-     rFon,
-     rSam,
-     rcurSam;
-HANDLE hThread;
-HANDLE hEnemyThread;
+     rFon;
+//Handles for threads
+HANDLE hThread, hEnemyThread;
+//Bitmaps for objects to draw
 HBITMAP hBitmap,
         hSteve,
         hSteveR,
@@ -66,17 +66,19 @@ HBITMAP hBitmap,
         bmpHit,
         bmpHpBar,
         bmpFireBall;
-
+//Player and ene,y positions and health
 INT xPl = 1, yPl = 32 * 3;
 INT xEn = 500, yEn = 32 * 3;
+INT plHP = 100, enHP = 150;
+//Level
 INT lvl = 0;
 
-INT plHP = 100, enHP = 150;
-
+//Logic variables
 BOOL jump = FALSE, onGround = TRUE, menu = FALSE, attack = FALSE;
 BOOL mRight = TRUE, mLeft = FALSE, inFight = FALSE;
 BOOL levels[10] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, inHouse = FALSE;
 BOOL enemyAlive = TRUE;
+//Fonts
 HFONT hfont;
 LOGFONT font;
 
@@ -100,28 +102,27 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	// TODO: Place code here.
 
 	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDC_GAME, szWindowClass, MAX_LOADSTRING);
 
-	WNDCLASS WndClass = {};
-	MSG Msg;
+	WNDCLASS wnd_class;
+	MSG msg;
 	const wchar_t szClassName[] = L"Game";
+	//Window class registering
+	wnd_class.style = CS_HREDRAW | CS_VREDRAW;
+	wnd_class.lpfnWndProc = WndProc; //Main process
+	wnd_class.hInstance = hInstance; //Instance
+	wnd_class.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH)); //Default brush for background
+	wnd_class.lpszClassName = szClassName; //Class name
+	wnd_class.hCursor = LoadCursor(nullptr, IDC_ARROW); //Default cursor
+	wnd_class.hIcon = LoadIcon(nullptr, IDI_APPLICATION); //Icon
+	wnd_class.lpszMenuName = nullptr; //Window menu name
+	wnd_class.cbClsExtra = 0;
+	wnd_class.cbWndExtra = 0;
 
-	WndClass.style = CS_HREDRAW | CS_VREDRAW;
-	WndClass.lpfnWndProc = WndProc;
-	WndClass.hInstance = hInstance;
-	WndClass.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH));
-	WndClass.lpszClassName = szClassName;
-	WndClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	WndClass.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
-	WndClass.lpszMenuName = nullptr;
-	WndClass.cbClsExtra = 0;
-	WndClass.cbWndExtra = 0;
 
-
-	if (!RegisterClass(&WndClass))
+	if (!RegisterClass(&wnd_class))
 	{
 		MessageBox(nullptr, L"Cannot register class", L"Error", MB_OK);
 		return 0;
@@ -148,30 +149,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	mainHinstace = hInstance;
 	hThread = CreateThread(nullptr, 0, threadDraw, nullptr, NULL, nullptr);
 
-	font.lfHeight = 10; // Устанавливает высоту шрифта или символа
-	font.lfWidth = 0; // Устанавливает среднюю ширину символов в шрифте
-	font.lfEscapement = 0; // Устанавливает угол, между вектором наклона и осью X устройства
-	font.lfOrientation = 0; // Устанавливает угол, между основной линией каждого символа и осью X устройства
-	font.lfWeight = 800; // Устанавливает толщину шрифта в диапазоне от 0 до 1000
-	font.lfItalic = 0; // Устанавливает курсивный шрифт
-	font.lfUnderline = 0; // Устанавливает подчеркнутый шрифт
-	font.lfStrikeOut = 0; // Устанавливает зачеркнутый шрифт
-	font.lfCharSet = RUSSIAN_CHARSET; // Устанавливает набор символов
-	font.lfOutPrecision = 0; // Устанавливает точность вывода
-	font.lfClipPrecision = 0; // Устанавливает точность отсечения
-	font.lfQuality = 0; // Устанавливает качество вывода
-	font.lfPitchAndFamily = 0; // Устанавливает ширину символов и семейство шрифта
-	wsprintf(font.lfFaceName, L"VERDANA"); //  устанавливает название шрифта
+	font.lfHeight = 10; // Height of symbol
+	font.lfWidth = 0; // Width of symbol
+	font.lfEscapement = 0; 
+	font.lfOrientation = 0; 
+	font.lfWeight = 800; // Thickness (0 - 1000)
+	font.lfItalic = 0; 
+	font.lfUnderline = 0; 
+	font.lfStrikeOut = 0; 
+	font.lfCharSet = RUSSIAN_CHARSET; //Charracter set
+	font.lfOutPrecision = 0; // Output precision
+	font.lfClipPrecision = 0; 
+	font.lfQuality = 0; // Output quality
+	font.lfPitchAndFamily = 0; // Width of symbols and family
+	wsprintf(font.lfFaceName, L"VERDANA"); // Name of font
 
 	hfont = ::CreateFontIndirect(&font);
 
 	ShowWindow(hWnd, 3);
 	UpdateWindow(hWnd);
 
-	while (GetMessage(&Msg, nullptr, 0, 0))
+	while (GetMessage(&msg, nullptr, 0, 0))
 	{
-		TranslateMessage(&Msg);
-		DispatchMessage(&Msg);
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 	ExitProcess(0);
 }
@@ -217,7 +218,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	auto hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	const auto hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 	                          CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
 	if (!hWnd)
@@ -251,7 +252,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	GetObject(hBitmap, sizeof(bm), &bm);
 	switch (message)
 	{
-	case WM_DESTROY:
+	case WM_DESTROY: //Close window
 		{
 			if (hThread)
 			{
@@ -260,10 +261,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		break;
-	case WM_PAINT:
-		GetClientRect(hWnd, &rWindow);
-		winDC = BeginPaint(hWnd, &PaintStruct);
-		StretchBlt(
+	case WM_PAINT: //Draw window
+		GetClientRect(hWnd, &rWindow); //Getting Window dimensions
+		winDC = BeginPaint(hWnd, &PaintStruct); //Start paint procedure
+		StretchBlt( //Copy in-memory painted window to opened window
 			winDC,
 			rWindow.left,
 			rWindow.top,
@@ -276,48 +277,48 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			rWindow.bottom,
 			SRCCOPY
 		);
-		EndPaint(hWnd, &PaintStruct);
+		EndPaint(hWnd, &PaintStruct); //End paint procedure
 		return 0;
 		break;
-	case WM_KEYDOWN:
-		if (GetAsyncKeyState(VK_UP) < 0 && onGround == TRUE || GetKeyState(VK_SPACE) && onGround == TRUE ||
+	case WM_KEYDOWN: //If key pressed
+		if (GetAsyncKeyState(VK_UP) < 0 && onGround == TRUE || GetKeyState(VK_SPACE) && onGround == TRUE || //If W or w or Arrow Up or Space Bar and player is on the ground then jump
 			LOWORD(wParam) == 'w' && onGround == TRUE || LOWORD(wParam) == 'W' && onGround == TRUE)
 		{
 			jump = TRUE;
 			onGround = FALSE;
 		}
-		if (GetAsyncKeyState(VK_RIGHT) < 0 || LOWORD(wParam) == 'd' || LOWORD(wParam) == 'D')
+		if (GetAsyncKeyState(VK_RIGHT) < 0 || LOWORD(wParam) == 'd' || LOWORD(wParam) == 'D') //If Arrow Right or d then move right
 		{
-			!inHouse
-				? (xPl + 64 >= rWindow.right)
-					  ? xPl = rWindow.right - 64
-					  : xPl += 10
-				: (xPl + 190 >= rWindow.right)
-				? xPl = rWindow.right - 190
-				: xPl += 10;
+			!inHouse //If not in house
+				? (xPl + 64 >= rWindow.right) //If right border of player is outside of window rectangle
+					  ? xPl = rWindow.right - 64 //Set player position to maximum right
+					  : xPl += 10 //Increase position by 10 (Move right)
+				: (xPl + 190 >= rWindow.right) //If in house player position is outside of window rectangle
+				? xPl = rWindow.right - 190 //Set player position to maximum right
+				: xPl += 10; //Increase by 10 (Move right)
 			mRight = TRUE;
 			mLeft = FALSE;
 		}
-		if (GetAsyncKeyState(VK_LEFT) < 0 || LOWORD(wParam) == 'a' || LOWORD(wParam) == 'A')
+		if (GetAsyncKeyState(VK_LEFT) < 0 || LOWORD(wParam) == 'a' || LOWORD(wParam) == 'A') //If Arrow Left or a then move left
 		{
-			!inHouse
-				? (xPl - 24 <= rWindow.left)
-					  ? xPl = rWindow.left
-					  : xPl -= 10
-				: (xPl + 190 <= rWindow.left)
-				? xPl = rWindow.left - 190
-				: xPl -= 10;
+			!inHouse //If not is house
+				? (xPl - 24 <= rWindow.left) //If left border of player is outside of window rectangle
+					  ? xPl = rWindow.left //Set player position to maximum left
+					  : xPl -= 10 //Decrease player position by 10 (Move left)
+				: (xPl + 190 <= rWindow.left) //If in house left border of player is outside of window rectangle
+				? xPl = rWindow.left - 190 //Set player position to maximum left
+				: xPl -= 10; //Decrease by 10 (Move left)
 			mRight = FALSE;
 			mLeft = TRUE;
 		}
-		if (LOWORD(wParam) == 'f' || LOWORD(wParam) == 'F')
+		if (LOWORD(wParam) == 'f' || LOWORD(wParam) == 'F') //If F or f then attack
 		{
 			attack = TRUE;
 		}
 
-		if (LOWORD(wParam) == 'r' || LOWORD(wParam) == 'R')
+		if (LOWORD(wParam) == 'r' || LOWORD(wParam) == 'R') //IF R or r then restart game
 		{
-			const auto msg_result = MessageBox(hWnd, L"Do you really wan't restart game ?", L"Caution, game restart !",
+			const auto msg_result = MessageBox(hWnd, L"Do you really want restart game ?", L"Caution, game restart !",
 			                                  MB_YESNO);
 			if (msg_result == 6)
 			{
@@ -334,14 +335,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 
-		if (GetKeyState(VK_ESCAPE) < 0)
+		if (GetKeyState(VK_ESCAPE) < 0) //If escape show menu 
 		{
 			MessageBox(hWnd, L"Menu body", L"Main menu", NULL);
 		}
 
 		return 0;
 		break;
-	case WM_KEYUP:
+	case WM_KEYUP: //If F or f key is up (released) then stop attack
 		if (LOWORD(wParam) == 'f' || LOWORD(wParam) == 'F')
 		{
 			attack = FALSE;
@@ -352,27 +353,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-// Message handler for about box.
-//INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-//{
-//    UNREFERENCED_PARAMETER(lParam);
-//    switch (message)
-//    {
-//    case WM_INITDIALOG:
-//        return (INT_PTR)TRUE;
-//
-//    case WM_COMMAND:
-//        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-//        {
-//            EndDialog(hDlg, LOWORD(wParam));
-//            return (INT_PTR)TRUE;
-//        }
-//        break;
-//    }
-//    return (INT_PTR)FALSE;
-//}
-
-
+/*
+ * LoadResource
+ * Desc: Function to load all needed resources from files in project
+ * After all resources has been loaded, temporary objects are deleted
+ */
 VOID LoadResuorce()
 {
 	const auto tempDC = GetDC(hWnd);
@@ -466,6 +451,11 @@ VOID LoadResuorce()
 	}
 }
 
+
+/*
+ * threadDraw
+ * Desc: Thread function to draw main player hero and all other stuff on screen to in-memory window descriptor
+ */
 DWORD WINAPI threadDraw(LPVOID A)
 {
 	static auto w = 64, h = 64;

@@ -47,7 +47,7 @@ namespace ScanPort
                     WriteLine("Enter IP address to search for opened sockets : ");
                     var tmp = ReadLine();
                     hostD = IPAddress.Parse(tmp ?? throw new InvalidOperationException());
-                    var process = Process.Start(@"D:\My_Projects\WIP\TcpListener\bin\Debug\TcpListener.exe", hostD.ToString());
+                    var process = Process.Start(@"D:\GitHub\WIP\TcpListener\bin\Debug\TcpListener.exe", hostD.ToString());
                     ps.Start(crtThread, portStart);
                     break;
                 case "n":
@@ -110,22 +110,18 @@ namespace ScanPort
 
         public void Run(object port)
         {
-            int _port = (int)port;
+            int _port;
             var tcp = new TcpClient();
             var portCl = 0;
             while ((_port = _portList.GetNext()) != (_port +  65535 / 5))
             {
-                try
-                {
+                try{
                     tcp = new TcpClient(_host.ToString(), _port);
-                }
-                catch
-                {
+                }catch{
                     portCl++;
                     continue;
                 }
-                finally
-                {
+                finally {
                     try
                     {
                         tcp.Close();
