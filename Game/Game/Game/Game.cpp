@@ -601,7 +601,8 @@ DWORD WINAPI threadDraw(LPVOID A)
 			if (enemyAlive == TRUE)
 			{
 				EnemyDraw(enR, enF, t, t1, maxHpEn, bmHpBar, bmEnemy, bm);
-			}
+				enF += enF < 4 ? 1 : -enF;
+ 			}
 			if (attack)
 			{
 				Attack(bmHit, bmSteve, bm);
